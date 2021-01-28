@@ -2,7 +2,7 @@
 <div class="navbar"><h1>Extension Store Description Tool</h1></div>
 <div id="app">
   <div v-for="lang in languages" style="font-size: 22px; margin-bottom: 8px">
-    {{ lang }}
+    <p class="lang">{{ lang }}</p>
     <button @click="copy(lang)">copy</button>
     <span v-show="strings[lang]?.copied"> copied!</span>
   </div>
@@ -116,7 +116,9 @@ button:hover {
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
   user-select: none;
 }
-
+.lang {
+  width: 100px;
+  }
 h1 {
   font-size: 18px;
   margin: 0;
