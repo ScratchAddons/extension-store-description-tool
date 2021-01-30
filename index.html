@@ -4,12 +4,17 @@
   <div v-for="lang in languages" style="font-size: 22px; margin-bottom: 8px">
     <p class="lang">{{ lang }}</p>
     <button @click="copy(lang)">copy</button>
+    <span
+      v-if="strings[lang]"
+      :style="{color: strings[lang].scratchCount > 5 ? 'red' : 'inherit'}"
+      >&nbsp;&nbsp;&nbsp;"scratch" count: {{ strings[lang].scratchCount }}</span
+    >
     <span v-show="strings[lang]?.copied"> copied!</span>
   </div>
 </div>
 
 <script>
-  Vue.createApp({
+  const vue = Vue.createApp({
     data() {
       return {
         languages: [
@@ -47,13 +52,21 @@
           "extensionStoreDescription5",
           "extensionStoreDescription6",
         ];
+        this.strings[lang].scratchCount = 0;
         for (const key of keys) {
           this.strings[lang][key] = json[key]?.message || this.strings.en[key];
+          this.strings[lang].scratchCount += (
+            this.strings[lang][key].match(/cratch/g) || []
+          ).length;
         }
       }
     },
     methods: {
       copy(lang) {
+        if (this.strings[lang].scratchCount > 5) {
+          const res = confirm("Are you sure? This goes over the keyword limit")
+          if (!res) return;
+        }
         const s = this.strings[lang];
         s.copied = true;
         setTimeout(() => (s.copied = false), 2000);
@@ -74,126 +87,145 @@ ${s.extensionStoreDescription6}`;
 </script>
 <style>
   html {
-  background: #2a2a2a;
-}
-
-body {
-  background: #222;
-  font-family: "Sora", sans-serif;
-  margin: 0;
-  color: white;
-  font-size: 12px;
-}
-button {
-  color: #fff;
-  background: #222222;
-  border: 1px solid #000;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: 0.25s ease;
-  outline: none;
-  height: 32px;
-  font-family: inherit;
-  font-size: 12px;
-}
-button:hover {
-  outline: none;
-  background: #151515;
-}
-
-#app {
-    margin: 1em;
-}
-.navbar {
-  height: 60px;
-  background: #ff7b26;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-  user-select: none;
-}
-.lang {
-  width: 75px;
-  display: inline-block;
+    background: #2a2a2a;
   }
-h1 {
-  font-size: 18px;
-  margin: 0;
-  font-weight: 400;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Sora';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQspDre2.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Sora';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQUpDg.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Sora';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQspDre2.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Sora';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQUpDg.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Sora';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQspDre2.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Sora';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQUpDg.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Sora';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQspDre2.woff2) format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Sora';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQUpDg.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-  
+
+  body {
+    background: #222;
+    font-family: "Sora", sans-serif;
+    margin: 0;
+    color: white;
+    font-size: 12px;
+  }
+  button {
+    color: #fff;
+    background: #222222;
+    border: 1px solid #000;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: 0.25s ease;
+    outline: none;
+    height: 32px;
+    font-family: inherit;
+    font-size: 12px;
+  }
+  button:hover {
+    outline: none;
+    background: #151515;
+  }
+
+  #app {
+    margin: 1em;
+  }
+  .navbar {
+    height: 60px;
+    background: #ff7b26;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+    user-select: none;
+  }
+  .lang {
+    width: 75px;
+    display: inline-block;
+  }
+  h1 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 400;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: "Sora";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQspDre2.woff2)
+      format("woff2");
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+      U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: "Sora";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQUpDg.woff2)
+      format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+      U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: "Sora";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQspDre2.woff2)
+      format("woff2");
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+      U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: "Sora";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQUpDg.woff2)
+      format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+      U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: "Sora";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQspDre2.woff2)
+      format("woff2");
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+      U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: "Sora";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQUpDg.woff2)
+      format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+      U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: "Sora";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQspDre2.woff2)
+      format("woff2");
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+      U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: "Sora";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/sora/v1/xMQbuFFYT72XzQUpDg.woff2)
+      format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
+      U+2215, U+FEFF, U+FFFD;
+  }
 </style>
