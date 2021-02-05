@@ -1,7 +1,8 @@
 <script src="https://unpkg.com/vue@3.0.5/dist/vue.global.js"></script>
 <div class="navbar"><h1>Extension Store Description Tool</h1></div>
 <div id="app">
-  <div v-for="lang in languages" class="lang-container" :class="{warn: strings[lang].scratchCount > 5}">
+  <div v-for="lang in languages" class="lang-container">
+    <div :class="{warn: strings[lang].scratchCount > 5}">
     <p class="lang">{{ lang }}</p>
     <button @click="copy(lang)">copy</button>
     <span
@@ -10,6 +11,7 @@
       >&nbsp;&nbsp;&nbsp;"scratch" count: {{ strings[lang].scratchCount }}</span
     >
     <span v-show="strings[lang]?.copied"> copied!</span>
+    </div>
   </div>
 </div>
 
