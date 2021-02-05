@@ -1,7 +1,7 @@
 <script src="https://unpkg.com/vue@3.0.5/dist/vue.global.js"></script>
 <div class="navbar"><h1>Extension Store Description Tool</h1></div>
 <div id="app">
-  <div v-for="lang in languages" style="font-size: 22px; margin-bottom: 8px">
+  <div v-for="lang in languages" class="lang-container" :class="{warn: strings[lang].scratchCount > 5}">
     <p class="lang">{{ lang }}</p>
     <button @click="copy(lang)">copy</button>
     <span
@@ -134,6 +134,21 @@ ${s.extensionStoreDescription6}`;
     font-size: 18px;
     margin: 0;
     font-weight: 400;
+  }
+  .lang-container {
+    font-size: 22px; 
+    margin-bottom: 8px;
+  }
+  .warn {
+    color: white;
+    padding: 10px;
+    background: rgba(255, 38, 103, 0.2);
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 10px 0;
+    display: inline-block;
+    width: max-content;
+    align-items: center;
   }
   /* latin-ext */
   @font-face {
