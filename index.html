@@ -9,7 +9,7 @@
       :style="{color: strings[lang].scratchCount > 5 ? 'red' : 'inherit'}"
       >&nbsp;&nbsp;&nbsp;"scratch" count: {{ strings[lang].scratchCount }}</span
     >
-    <span v-show="strings[lang]?.copied"> copied!</span>
+    <span class="badge copied" v-show="strings[lang]?.copied">copied!</span>
   </div>
 </div>
 
@@ -142,6 +142,19 @@ ${s.extensionStoreDescription6}`;
   .lang-container {
     font-size: 22px; 
     margin-bottom: 8px;
+  }
+  .badge.copied {
+    background: #175ef8;
+    border-color: #0e44b8;
+  }
+  .badge {
+      background: gray;
+      color: #fff;
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-size: 12px;
+      margin-left: 10px;
+      border-bottom: 2px solid #111;
   }
   /* latin-ext */
   @font-face {
