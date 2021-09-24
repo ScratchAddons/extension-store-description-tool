@@ -57,7 +57,7 @@
         for (const key of keys) {
           this.strings[lang][key] = json[key]?.message || this.strings.en[key];
           this.strings[lang].scratchCount += (
-            this.strings[lang][key].match(/cratch/g) || []
+            this.strings[lang][key].match(/scratch/gi) || []
           ).length;
         }
       }
