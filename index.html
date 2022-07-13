@@ -22,16 +22,20 @@
           "de",
           "es",
           "fr",
+          "hu",
           "it",
           "ja",
           "ko",
+          "nl",
           "pl",
           "pt_BR",
           "pt_PT",
           "ro",
           "ru",
           "sl",
+          "th",
           "tr",
+          "zh_CN"
         ],
         strings: {},
         text: {},
@@ -50,8 +54,6 @@
           "extensionStoreDescription2",
           "extensionStoreDescription3",
           "extensionStoreDescription4",
-          "extensionStoreDescription5",
-          "extensionStoreDescription6",
         ];
         this.strings[lang].scratchCount = 0;
         for (const key of keys) {
@@ -76,11 +78,7 @@ ${s.extensionStoreDescription2}
 
 ${s.extensionStoreDescription3}
 
-${s.extensionStoreDescription4}
-
-${s.extensionStoreDescription5}
-
-${s.extensionStoreDescription6}`.replaceAll("➖", "—");
+${s.extensionStoreDescription4}`;
         navigator.clipboard.writeText(str);
       },
     },
