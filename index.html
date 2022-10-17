@@ -7,7 +7,7 @@
     <button @click="copyEdge(lang)">{{ strings[lang]?.copiedEdge ? "Copied Edge!" : "Copy Edge" }}</button>
     <span
       v-if="strings[lang]"
-      :style="{color: strings[lang].scratchCount > 5 ? 'red' : 'inherit'}"
+      :style="{color: strings[lang].scratchCount > 6 ? 'red' : 'inherit'}"
       >&nbsp;&nbsp;&nbsp;"scratch" count: {{ strings[lang].scratchCount }}</span
     >
   </div>
